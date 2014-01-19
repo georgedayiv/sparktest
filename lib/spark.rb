@@ -4,9 +4,11 @@ class Spark
 	def token
 		@token = YAML.load_file("#{Rails.root}/config/spark.yml")['access_token']
 	end
+
 	def version
 		version = "/v1"
 	end
+
 	def base
 		@base = "https://api.spark.io" + version
 	end
@@ -34,12 +36,26 @@ class Spark
 		response = HTTParty.get("#{base}/devices/#{@core}/humidity?access_token=#{token}")
 		temperature = response['TEMPORARY_allTypes']['number']
 	end
+
 	def get_variables
 		return unless @core
 		HTTParty.get("#{base}/devices/#{@core}?access_token=#{token}")
 	end
 
+	def confirm_device
+		return unless @core
+		response = get_devices
+		response.each do |device|
+			unless device['id'] == @core && device['connected'] == true
+				return false
+			else
+				return true
+			end
+		end
+	end
+
 
 
 end
+
 
