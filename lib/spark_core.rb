@@ -39,12 +39,13 @@ class SparkCore
 
 	def get_temperature
 		response = HTTParty.get("#{base}/devices/#{@core}/temperature?access_token=#{token}")
-		temperature = response['TEMPORARY_allTypes']['number']
+		temperature = response['result']
+		#puts response
 	end
 
 	def get_humidity
 		response = HTTParty.get("#{base}/devices/#{@core}/humidity?access_token=#{token}")
-		temperature = response['TEMPORARY_allTypes']['number']
+		humidity = response['result']
 	end
 
 end

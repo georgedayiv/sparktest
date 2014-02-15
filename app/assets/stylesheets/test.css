@@ -1,0 +1,12 @@
+
+
+#page {
+  margin: 36px auto;
+  width: 90%;
+}
+
+.sensor {
+	display: inline-block;
+	width: 35%;
+
+}

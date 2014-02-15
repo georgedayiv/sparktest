@@ -3,7 +3,7 @@ class SparkController < ApplicationController
 
 	def index
 		begin
-			spark1 = SparkCore.new("53ff6b065067544833151187")
+			spark1 = SparkCore.new(SPARK1)
 			@temperature = spark1.get_temperature
 			@humidity = spark1.get_humidity
 		rescue DeviceNotConnected	
@@ -12,7 +12,7 @@ class SparkController < ApplicationController
 		end
 
 		begin
-			spark2 = SparkCore.new("50ff6c065067545619130387")
+			spark2 = SparkCore.new(SPARK2)
 			@temp2 = spark2.get_temperature
 			@humid2 = spark2.get_humidity
 		rescue DeviceNotConnected
