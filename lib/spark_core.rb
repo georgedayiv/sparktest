@@ -26,15 +26,19 @@ class SparkCore
 	end
 
 	def confirm_device
-		response = HTTParty.get("#{base}/devices?access_token=#{token}")
-		response.each do |device|
-			if device['id'] == @core
-				if device['connected'] == true
-					return true
+		begin
+			response = HTTParty.get("#{base}/devices?access_token=#{token}")
+			response.each do |device|
+				if device['id'] == @core
+					if device['connected'] == true
+						return true
+					end
 				end
 			end
+			false
+		rescue SocketError
+			return "Network Problem"
 		end
-		false
 	end
 
 	def get_temperature
