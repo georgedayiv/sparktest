@@ -26,12 +26,15 @@ namespace :sensors do
 
 			if spark1 
 		  		puts "It works" 
+		  		Rails.logger.info "Sensor Rake Worked at #{Time.now}"
 			else 
 				puts "Didn't work"
 			end
 
 		rescue Exception => e
 			puts "I'm rescued: #{e}"
+			Rails.logger.info "Sensor Rake Failed: #{e} -----------"
+
 		end
 
 	end
