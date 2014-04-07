@@ -1,0 +1,40 @@
+
+
+#page {
+  margin: 36px auto;
+  width: 90%;
+}
+
+.sensor {
+	display: inline-block;
+	width: 35%;
+	border: 1px solid;
+	border-radius: 5px;
+
+}
+
+.sensor_chart {
+	margin-top: 25px;
+}
+
+h1 {
+/*	font-family: 'Cinzel', serif; */
+	font-family: 'Special Elite', serif;
+	font-weight: 900;
+}
+
+h3.core {
+	background-color: #99CCFF;
+	font-family: 'Exo', serif;
+	font-weight: 700;
+	font-size: 25px;
+	margin-top: 0;
+	border-bottom: 1px solid;
+	padding-left: 1%;
+}
+
+p.reading {
+	margin-left: 1%;
+	font-family: 'Exo', sans-serif;
+
+}

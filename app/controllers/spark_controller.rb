@@ -19,6 +19,16 @@ class SparkController < ApplicationController
 			@temp2 = "unavailable"
 			@humid2 = "unavailable"
 		end
+
+		core1 = Reading.where(core: "Spark1")
+		core2 = Reading.where(core: "Spark2")
+	end
+
+	def index2
+		@temp2 = 72
+		@humid2 = 45
+		@temperature = 66
+		@humidity = 31
 	end
 
 end
