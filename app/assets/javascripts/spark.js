@@ -5,8 +5,9 @@ $(function(){
 
 	var spark_width = document.getElementById("core1").offsetWidth;
 	var spark_height = document.getElementById("core1").offsetHeight;
-	console.log(spark_width);
-	console.log(spark_height);
+
+
+
 
 	var margin = { top: 20, right: 30, bottom: 30, left: 40 },
 	    width = spark_width - margin.left - margin.right,
