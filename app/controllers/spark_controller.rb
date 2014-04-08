@@ -31,4 +31,9 @@ class SparkController < ApplicationController
 		@humidity = 31
 	end
 
+	def spark1
+		@spark1 = Reading.where(core: "spark1")
+		render json: @spark1
+	end
+
 end
