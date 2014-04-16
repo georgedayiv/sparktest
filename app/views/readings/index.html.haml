@@ -1,0 +1,28 @@
+%h1 Readings in Detail
+%div#nav
+  =link_to "Home", root_path
+%p Click the header to sort by that column.
+
+%table#readings.tablesorter
+  %thead
+    %tr
+      %th Core
+      %th Location
+      %th Time
+      %th Temprature
+      %th Humidity
+    %tbody
+      -@readings.each do |reading|
+        %tr
+          %td= reading.core
+          %td= reading.note
+          %td= reading.created_at
+          %td= reading.temprature
+          %td= reading.humidity
+
+
+
+%script{:type => "text/javascript",
+        :src => "/jquery.tablesorter.js"}
+%script{:type => "text/javascript",
+        :src => "/readings.js"}

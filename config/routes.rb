@@ -7,6 +7,8 @@ Sparktest::Application.routes.draw do
 
   root 'spark#index'
   get 'spark1' => 'spark#spark1'
+  resources :readings
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
