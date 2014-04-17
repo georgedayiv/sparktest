@@ -7,6 +7,7 @@ Sparktest::Application.routes.draw do
 
   root 'spark#index'
   get 'spark1' => 'spark#spark1'
+  get 'spark2' => 'spark#spark2'
   resources :readings
   
   # Example of regular route:

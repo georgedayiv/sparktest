@@ -1,13 +1,10 @@
 
 $(function(){
-	
-
 
 	var spark_width = document.getElementById("core1").offsetWidth;
 	var spark_height = document.getElementById("core1").offsetHeight;
 
-
-
+	core = "/spark1"
 
 	var margin = { top: 20, right: 30, bottom: 30, left: 40 },
 	    width = spark_width - margin.left - margin.right,
@@ -24,7 +21,7 @@ $(function(){
 	var y = d3.scale.linear().range([height, 0]);
 
 	var xAxis = d3.svg.axis()
-				  .scale(x)
+				  .scale(x).ticks(d3.time.day, 1)
 				  .orient("bottom");
 
 	var yAxis = d3.svg.axis()
@@ -35,45 +32,46 @@ $(function(){
 				 .x(function(d) {return x(d.created_at);})
 				 .y(function(d) {return y(d.temprature);});
 
-	var prepDate = function(datetime) {
-				split = datetime.split("T");
-				date = split[0];
-				time = split[1].split(".")[0];
-				return time;
+
+	var parseDate = d3.time.format("%Y-%m-%dT%H:%M:%S.000Z").parse;
+
+	function clear_chart() {
+		d3.selectAll("path").data('').exit().remove();
+		d3.selectAll(".axis").remove();
 	}
 
-	var parseDate = d3.time.format("%H:%M:%S").parse;
+	function generate_chart(core) {
+		d3.json(core, function(error, data) {
+			data.forEach(function(d) {
+				d.created_at = parseDate(d.created_at);
+				d.temprature = +d.temprature;
+			});
 
-	d3.json("/spark1", function(error, data) {
-		data.forEach(function(d) {
-			d.created_at = parseDate(prepDate(d.created_at));
-			d.temprature = +d.temprature;
+			x.domain(d3.extent(data, function(d) {return d.created_at; }));
+			y.domain(d3.extent(data, function(d) {return d.temprature;}));
+
+			chart.append("g")
+				 .attr("class", "x axis")
+				 .attr("transform", "translate(0," + height + ")")
+				 .call(xAxis);
+
+			chart.append("g")
+				 .attr("class", "y axis")
+				 .call(yAxis)
+			   .append("text")
+			     .attr("transform", "rotate(-90)")
+			     .attr("y", 6)
+			     .attr("dy", ".71em")
+			     .style("text-anchor", "end")
+			     .text("Temprature");
+
+			chart.append("path")
+				 .datum(data)
+				 .attr("class", "line")
+				 .attr("d", line);
+
 		});
-
-		x.domain(d3.extent(data, function(d) {return d.created_at; }));
-		y.domain(d3.extent(data, function(d) {return d.temprature;}));
-
-		chart.append("g")
-			 .attr("class", "x axis")
-			 .attr("transform", "translate(0," + height + ")")
-			 .call(xAxis);
-
-		chart.append("g")
-			 .attr("class", "y axis")
-			 .call(yAxis)
-		   .append("text")
-		     .attr("transform", "rotate(-90)")
-		     .attr("y", 6)
-		     .attr("dy", ".71em")
-		     .style("text-anchor", "end")
-		     .text("Temprature");
-
-		chart.append("path")
-			 .datum(data)
-			 .attr("class", "line")
-			 .attr("d", line);
-
-	});
+	}
 
 var aspect = 960 / 500
 	$(window).on("resize", function() {
@@ -82,5 +80,17 @@ var aspect = 960 / 500
 		blah.attr("width", targetWidth);
 		blah.attr("height", targetWidth / aspect)
 	})
+
+	generate_chart(core);
+
+	$("#Rhys").click(function() {
+		clear_chart();
+		generate_chart("/spark1");
+	});
+
+	$("#Basement").click(function() {
+		clear_chart();
+		generate_chart("/spark2");
+	});
 
 });

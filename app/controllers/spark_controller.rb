@@ -33,7 +33,13 @@ class SparkController < ApplicationController
 
 	def spark1
 		@spark1 = Reading.where(core: "spark1")
+			
 		render json: @spark1
+	end
+
+	def spark2
+		@spark2 = Reading.where(core: "spark2")
+		render json: @spark2
 	end
 
 end
