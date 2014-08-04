@@ -5,20 +5,23 @@
 
 %div.sensor
   %h3.core Spark 1 (Rhys's Room)
-  %p.reading= "Temperature: #{@temperature}&#xb0;".html_safe 
-  %p.reading= "Humidity: #{@humidity}%"
-  
+  %p.reading#spark1temp 
+    Temprature: 
+    =image_tag("loading.gif", :height => '21px')
+  %p.reading#spark1humid
+    Humidity: 
+    =image_tag("loading.gif", :height => '21px') 
 
 %div.sensor
   %h3.core Spark 2 (The basement)
-  %p.reading= "Temperature: #{@temp2}&#xb0;".html_safe 
-  %p.reading= "Humidity: #{@humid2}%"
-  
-%div.sensor_chart
-  %h3.core#core1 This graph is improving, but isn't done yet.
-  =link_to "Rhys's Room", "", {:id => "Rhys"}
-  =link_to "Basement", "", {:id => "Basement"}
-  %svg#spark1
+  %p.reading#spark2temp
+    Temprature: 
+    =image_tag("loading.gif", :height => '21px')
+  %p.reading#spark2humid
+    Humidity: 
+    =image_tag("loading.gif", :height => '21px')
+
+=high_chart("test", @chart)  
 
 %script{:type => "text/javascript",
         :src => "/d3.min.js"} 
