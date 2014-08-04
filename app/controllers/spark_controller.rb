@@ -2,35 +2,15 @@ require 'spark_core'
 class SparkController < ApplicationController
 
 	def index
-		@temperature = "unavailable"
-		@humidity = "unavailable"
-
-		@temp2 = "unavailable"
-		@humid2 = "unavailable"
-
 		@chart = chart
-	end
-
-	def index2
-		@temp2 = 72
-		@humid2 = 45
-		@temperature = 66
-		@humidity = 31
 	end
 
 	def spark1
 		@spark1 = Reading.new
-		begin
-			spark1 = SparkCore.new(SPARK1)
-			temperature = spark1.get_temperature
-			humidity = spark1.get_humidity
-			@spark1.core = "Spark1"
-			@spark1.temprature = temperature
-			@spark1.humidity = humidity
-		rescue
-			@spark1.temprature = "unavailable"
-			@spark1.humidity = "unavailable"
-		end
+		reading = get_readings(SPARK1)
+		@spark1.core = "Spark1"
+		@spark1.temprature = reading[:temperature]
+		@spark1.humidity = reading[:humidity]
 			
 		render json: @spark1
 	end
@@ -50,17 +30,6 @@ class SparkController < ApplicationController
 		end
 			
 		render json: @spark2
-	end
-
-	def test
-		begin
-			spark1 = SparkCore.new(SPARK1)
-			temperature = spark1.get_temperature
-			humidity = spark1.get_humidity
-		rescue DeviceNotConnected	
-			temperature = "unavailable"
-			humidity = "unavailable"
-		end
 	end
 
 private
@@ -86,16 +55,15 @@ private
 
 	end
 
-	def spark1_temp_now
+	def  get_readings(core)
 		begin
-			spark1 = SparkCore.new(SPARK1)
-			temperature = spark1.get_temperature
-			humidity = spark1.get_humidity
-		rescue DeviceNotConnected	
-			temperature = "unavailable"
-			humidity = "unavailable"
+			device = SparkCore.new(core)
+			t = device.get_temperature
+			h = device.get_humidity
+			return {:temperature => t, :humidity => h}
+		rescue
+			return {:temperature => "unavailable", :humidity => "unavailable"}
 		end
-
 	end
 
 end

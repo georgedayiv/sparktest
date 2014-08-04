@@ -20,6 +20,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 #gem 'd3js-rails'
 gem 'delayed_job'
 
@@ -33,6 +34,8 @@ gem 'haml'
 gem 'httparty'
 gem 'json'
 gem 'lazy_high_charts'
+gem 'weather-api'
+gem 'will_paginate'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
