@@ -2,7 +2,11 @@ require 'spark_core'
 class SparkController < ApplicationController
 
 	def index
-		@chart = chart
+		if params[:core] && Reading.pluck(:core).include?(params[:core])
+			@chart  = chart(params[:core].to_s)
+		else
+			@chart = chart("Spark1")
+		end
 	end
 
 	def spark1
@@ -33,13 +37,14 @@ class SparkController < ApplicationController
 	end
 
 private
-	def chart
-		readings = Reading.where(core: "Spark1").order(created_at: :desc).limit(25)
+	def chart(core)
+		return "Error" unless Reading.pluck(:core).include?(core)
+		readings = Reading.where(core: core).order(created_at: :desc).limit(25)
 		xaxis = readings.pluck(:created_at).map {|d| d.to_date}
 		temp = readings.pluck(:temprature)
 		humid = readings.pluck(:humidity)
 		LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(:text => "Temprature Readings")
+			f.title(:text => "#{core} Sensor Readings")
 			f.xAxis(:categories => xaxis)
 			f.series(:name => "Temp", :yAxis => 0, :data => temp )
 			f.series(:name => "Humidity", :yAxis => 1, :data => humid )

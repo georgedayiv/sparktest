@@ -4,7 +4,7 @@
 
 
 %div.sensor
-  %h3.core Spark 1 (Rhys's Room)
+  %h3.core= link_to "Spark 1 (Rhys's Room)", root_path(:core => "Spark1")
   %p.reading#spark1temp 
     Temprature: 
     =image_tag("loading.gif", :height => '21px')
@@ -13,7 +13,7 @@
     =image_tag("loading.gif", :height => '21px') 
 
 %div.sensor
-  %h3.core Spark 2 (The basement)
+  %h3.core= link_to "Spark 2 (The basement)", root_path(:core => "Spark2")
   %p.reading#spark2temp
     Temprature: 
     =image_tag("loading.gif", :height => '21px')
@@ -21,7 +21,7 @@
     Humidity: 
     =image_tag("loading.gif", :height => '21px')
 
-=high_chart("test", @chart)  
+=high_chart("chart", @chart)  
 
 %script{:type => "text/javascript",
         :src => "/d3.min.js"} 
